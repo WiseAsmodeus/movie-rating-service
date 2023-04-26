@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Фильмы</title>
+</head>
+<body>
+<main class="flex-shrink-0">
+    <!-- Page Content-->
+    <section layout:fragment="body" class="py-5">
+        <div class="container px-5 my-5">
+            <div class="text-center mb-5">
+                <h1 class="fw-bolder">Список фильмов</h1>
+            </div>
+            <div class="row gx-5">
+                <div>
+                    <form th:action="@{/movies/search}" class="my-2 mb-3">
+                        <input name="query" class="form-control" type="search" placeholder="Поиск фильмов"
+                        aria-label="Поиск">
+                    </form>
+                </div>
+
+                <div th:each="movie : ${movies}" class="col-lg-6 mb-2 mt-3">
+                    <div class="position-relative mb-3">
+                        <img class="img-fluid rounded-3 mb-3" th:src="${movie.getImageUrl()}" alt="..." />
+                        <a th:text="${movie.getTitle()}" class="h3 fw-bolder text-decoration-none link-dark stretched-link" href="#!">Project name</a>
+                    </div>
+                    <a class="btn btn-primary" th:href="@{/movies/{movieId}/edit(movieId=${movie.id})}">
+                        Редактировать
+                    </a>
+                    <a class="btn btn-primary" th:href="@{/movies/{movieId}(movieId=${movie.id})}">
+                        Подробнее...
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>
