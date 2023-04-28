@@ -13,15 +13,14 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @Builder
-@Table(name = "reviews")
+@Table(name = "comments")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Review {
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
     private String text;
 
     @CreationTimestamp

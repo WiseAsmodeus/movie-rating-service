@@ -1,7 +1,9 @@
 package com.movie.web.controllers;
 
+import com.movie.web.dto.CommentDto;
 import com.movie.web.dto.MovieDto;
 import com.movie.web.models.Movie;
+import com.movie.web.services.CommentService;
 import com.movie.web.services.MovieService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -15,9 +17,10 @@ import java.util.List;
 @Controller
 @AllArgsConstructor
 @RequestMapping
-public class  MovieController {
+public class MovieController {
 
     private final MovieService movieService;
+    private final CommentService commentService;
 
     @GetMapping("/movies")
     public String listMovies(Model model) {
@@ -25,7 +28,7 @@ public class  MovieController {
         var movies = movieService.getAll();
         model.addAttribute("movies", movies);
 
-        return "movies-list";
+        return "pages/movies/movies-list";
     }
 
     @GetMapping("/movies/search")
@@ -34,14 +37,14 @@ public class  MovieController {
         List<MovieDto> movies = movieService.searchMovies(query);
         model.addAttribute("movies", movies);
 
-        return "movies-list";
+        return "pages/movies/movies-list";
     }
 
     @GetMapping("/movies/new")
     public String createMovieForm(Model model) {
         Movie movie = new Movie();
         model.addAttribute("movie", movie);
-        return "movies-create";
+        return "pages/movies/movies-create";
     }
 
     @PostMapping("/movies/new")
@@ -51,7 +54,7 @@ public class  MovieController {
 
         if (result.hasErrors()) {
             model.addAttribute("movie", movieDto);
-            return "movies-create";
+            return "pages/movies/movies-create";
         }
 
         movieService.saveMovie(movieDto);
@@ -64,7 +67,7 @@ public class  MovieController {
         MovieDto movie = movieService.findMovieById(movieId);
         model.addAttribute("movie", movie);
 
-        return "movies-edit";
+        return "pages/movies/movies-edit";
     }
 
     @PostMapping("/movies/{movieId}/edit")
@@ -73,7 +76,7 @@ public class  MovieController {
                             BindingResult result) {
 
         if (result.hasErrors()) {
-            return "movies-edit";
+            return "pages/movies/movies-edit";
         }
 
         movie.setId(movieId);
@@ -85,9 +88,15 @@ public class  MovieController {
     @GetMapping("/movies/{movieId}")
     public String movieDetails(@PathVariable("movieId") Long movieId, Model model) {
         var movieDto = movieService.findMovieById(movieId);
-
         model.addAttribute("movie", movieDto);
-        return "movies-detail";
+
+        CommentDto comment = new CommentDto();
+        model.addAttribute("commentForm", comment);
+
+        var movieComments = commentService.getMovieComments(movieId);
+        model.addAttribute("movieComments", movieComments);
+
+        return "pages/movies/movies-detail";
     }
 
     @GetMapping("/movies/{movieId}/delete")

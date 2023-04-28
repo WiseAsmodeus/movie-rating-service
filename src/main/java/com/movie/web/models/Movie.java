@@ -27,5 +27,5 @@ public class Movie {
     private int releaseYear;
 
     @OneToMany
-    private List<Review> reviews;
+    private List<Comment> comments;
 }

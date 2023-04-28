@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>Добавление фильма</title>
+</head>
+<body>
+  <section layout:fragment="body">
+    <!-- Page content-->
+    <div class="container mt-5" th:object="${movie}">
+      <div class="row">
+        <div class="col-lg-8">
+          <!-- Movie content-->
+          <article>
+            <!-- Movie header-->
+            <header class="mb-4">
+              <!-- Movie title-->
+              <h1 class="fw-bolder mb-1"
+                  th:text="${movie.getTitle()}"></h1>
+              <!-- Post meta content-->
+              <div class="text-muted fst-italic mb-2"
+                   th:text="${movie.getReleaseCountry() + ', ' + movie.getReleaseYear()}"
+              ></div>
+              <!-- Post categories-->
+              <a class="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a>
+              <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
+            </header>
+            <!-- Preview image figure-->
+            <figure class="mb-4">
+              <img class="img-fluid rounded" th:src="${movie.getImageUrl()}" alt="..." />
+            </figure>
+            <!-- Post content-->
+            <section class="mb-5">
+              <p class="fs-5 mb-4"
+                 th:text="${movie.getDescription()}"
+              ></p>
+            </section>
+          </article>
+          <!-- Comments section-->
+          <section class="mb-5">
+            <div class="card bg-light">
+              <div class="card-body">
+                <!-- Comment form-->
+                <form class="mb-4"
+                      method="post"
+                      th:action="@{/comments/{movieId}/create(movieId=${movie.getId()})}"
+                      th:object="${commentForm}"
+                >
+                  <textarea class="form-control" rows="3"
+                            aria-label=""
+                            placeholder="Оставьте свой комментарий!"
+                            id="text"
+                            th:field="*{text}"
+                  ></textarea>
+                  <button type="submit" class="btn btn-primary mt-3">Добавить</button>
+                </form>
+                <!-- Comment with nested comments-->
+<!--                <div class="d-flex mb-4">-->
+<!--                  &lt;!&ndash; Parent comment&ndash;&gt;-->
+<!--                  <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>-->
+<!--                  <div class="ms-3">-->
+<!--                    <div class="fw-bold">Commenter Name</div>-->
+<!--                    If you're going to lead a space frontier, it has to be government; it'll never be private enterprise. Because the space frontier is dangerous, and it's expensive, and it has unquantified risks.-->
+<!--                    &lt;!&ndash; Child comment 1&ndash;&gt;-->
+<!--                    <div class="d-flex mt-4">-->
+<!--                      <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>-->
+<!--                      <div class="ms-3">-->
+<!--                        <div class="fw-bold">Commenter Name</div>-->
+<!--                        And under those conditions, you cannot establish a capital-market evaluation of that enterprise. You can't get investors.-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; Child comment 2&ndash;&gt;-->
+<!--                    <div class="d-flex mt-4">-->
+<!--                      <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." /></div>-->
+<!--                      <div class="ms-3">-->
+<!--                        <div class="fw-bold">Commenter Name</div>-->
+<!--                        When you put money directly to a problem, it makes a good headline.-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+                <!-- Single comment-->
+                <div class="d-flex mb-4" th:each="comment : ${movieComments}">
+                  <div class="flex-shrink-0">
+                    <img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..." />
+                  </div>
+                  <div class="ml-3">
+                    <div class="bold" th:text="${comment.getUsername()}"></div>
+                    <div class="text-wrap" th:text="${comment.getText()}"></div>
+                  </div>
+                  <div class="p-3">
+                    <a class="btn btn-primary"
+                       th:href="@{/comments/{movieId}/delete/{commentId}
+                     (movieId=${movie.id},
+                     commentId=${comment.id})}"
+                    >X</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>
