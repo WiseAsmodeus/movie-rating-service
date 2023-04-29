@@ -1,9 +1,11 @@
 package com.movie.web.controllers;
 
 import com.movie.web.dto.CommentDto;
+import com.movie.web.dto.GenreDto;
 import com.movie.web.dto.MovieDto;
 import com.movie.web.models.Movie;
 import com.movie.web.services.CommentService;
+import com.movie.web.services.GenreService;
 import com.movie.web.services.MovieService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -21,6 +23,7 @@ public class MovieController {
 
     private final MovieService movieService;
     private final CommentService commentService;
+    private final GenreService genreService;
 
     @GetMapping("/movies")
     public String listMovies(Model model) {
@@ -92,6 +95,9 @@ public class MovieController {
 
         CommentDto comment = new CommentDto();
         model.addAttribute("commentForm", comment);
+
+        List<GenreDto> movieGenres = genreService.findGenresByMovieId(movieId);
+        model.addAttribute("movieGenres", movieGenres);
 
         var movieComments = commentService.getMovieComments(movieId);
         model.addAttribute("movieComments", movieComments);

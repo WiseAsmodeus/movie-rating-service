@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,4 +29,15 @@ public class Movie {
 
     @OneToMany
     private List<Comment> comments;
+
+    @ManyToMany
+    List<Genre> genres;
+
+    public void addGenre(Genre genre) {
+        if (genres == null) {
+            genres = new ArrayList<>();
+        }
+
+        genres.add(genre);
+    }
 }

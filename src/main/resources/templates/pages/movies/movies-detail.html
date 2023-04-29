@@ -30,8 +30,11 @@
                    th:text="${movie.getReleaseCountry() + ', ' + movie.getReleaseYear()}"
               ></div>
               <!-- Post categories-->
-              <a class="badge bg-secondary text-decoration-none link-light" href="#!">Web Design</a>
-              <a class="badge bg-secondary text-decoration-none link-light" href="#!">Freebies</a>
+              <a th:each="genre: ${movieGenres}"
+                 class="badge bg-secondary text-decoration-none link-light mr-1"
+                 th:href="@{/movies/genre--{genreName}(genreName=${genre.name})}"
+                 th:text="${genre.getName()}"
+              ></a>
             </header>
             <!-- Preview image figure-->
             <figure class="mb-4">
