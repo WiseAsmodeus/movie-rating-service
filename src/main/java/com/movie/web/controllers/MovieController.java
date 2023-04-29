@@ -43,6 +43,22 @@ public class MovieController {
         return "pages/movies/movies-list";
     }
 
+    @GetMapping("/movies/genre--{genreName}")
+    public String createMoviesWithinGenre(@PathVariable("genreName") String genreName,
+                                          Model model) {
+
+        model.addAttribute("genreName", genreName);
+
+        var movies = movieService.findMoviesByGenreName(genreName);
+        model.addAttribute("movies", movies);
+
+        for (var movie : movies) {
+            System.out.println(movie.toString());
+        }
+
+        return "/pages/movies/movies-by-genre";
+    }
+
     @GetMapping("/movies/new")
     public String createMovieForm(Model model) {
         Movie movie = new Movie();

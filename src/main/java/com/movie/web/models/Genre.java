@@ -20,6 +20,6 @@ public class Genre {
     private Long id;
     private String name;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "genres", fetch = FetchType.LAZY)
     List<Movie> movies;
 }

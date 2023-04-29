@@ -11,4 +11,5 @@ import java.util.List;
 public interface MovieRepository extends JpaRepository<Movie, Long> {
     @Query("SELECT movie from Movie movie where movie.title like concat('%', :query, '%') ")
     List<Movie> searchMovies(String query);
+    List<Movie> findMoviesByGenres_Id(Long genreId);
 }

@@ -3,6 +3,7 @@ package com.movie.web.services.impl;
 import com.movie.web.dto.MovieDto;
 import com.movie.web.mappers.MovieMapper;
 import com.movie.web.models.Movie;
+import com.movie.web.repositories.GenreRepository;
 import com.movie.web.repositories.MovieRepository;
 import com.movie.web.services.MovieService;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ import static com.movie.web.mappers.MovieMapper.mapToMovieDto;
 public class MovieServiceImpl implements MovieService {
 
     private final MovieRepository movieRepository;
+    private final GenreRepository genreRepository;
 
     @Override
     public List<MovieDto> getAll() {
@@ -38,9 +40,9 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
-    public Movie saveMovie(MovieDto movieDto) {
+    public void saveMovie(MovieDto movieDto) {
         var movie = mapToMovie(movieDto);
-        return movieRepository.save(movie);
+        movieRepository.save(movie);
     }
 
     @Override
@@ -58,6 +60,15 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public void deleteMovie(Long movieId) {
         movieRepository.deleteById(movieId);
+    }
+
+    @Override
+    public List<MovieDto> findMoviesByGenreName(String genreName) {
+        var genreId = genreRepository.getGenreByName(genreName).getId();
+
+        return movieRepository.findMoviesByGenres_Id(genreId)
+                .stream().map(MovieMapper::mapToMovieDto)
+                .collect(Collectors.toList());
     }
 
 

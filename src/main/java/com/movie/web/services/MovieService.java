@@ -9,8 +9,10 @@ public interface MovieService {
     List<MovieDto> getAll();
     List<MovieDto> searchMovies(String query);
 
-    Movie saveMovie(MovieDto movie);
+    void saveMovie(MovieDto movie);
     MovieDto findMovieById(long movieId);
     void updateMovie(MovieDto movie);
     void deleteMovie(Long movieId);
+
+    List<MovieDto> findMoviesByGenreName(String genreName);
 }

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Фильмы</title>
+</head>
+<body>
+<main class="flex-shrink-0">
+    <!-- Page Content-->
+    <section layout:fragment="body" class="py-5">
+        <div class="container px-5">
+<!--            <div class="mt-2">-->
+<!--                <form th:action="@{/movies/search}" class="my-2 mb-3">-->
+<!--                    <input name="query" class="form-control" type="search" placeholder="Поиск фильмов"-->
+<!--                           aria-label="Поиск">-->
+<!--                </form>-->
+<!--            </div>-->
+            <div class="text-center mb-2 mt-4">
+                <h1 class="fw-bolder"
+                    th:text="'Список фильмов по жанру: ' + ${genreName}"></h1>
+            </div>
+        </div>
+        <div class="container px-5 my-5">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+                <div class="col" th:each="movie:${movies}">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <img class="card-img-top" th:src="${movie.getImageUrl()}"
+                                style="height: 400px">
+                            <br><br>
+                            <div class="form-floating mb-3">
+                                <p class="card-text text-truncate"><b th:text="${movie.getTitle()}"/></p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a th:href="@{/movies/{movieId}(movieId=${movie.id})}"
+                                       class="btn btn-sm btn-outline-secondary"
+                                    >Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>
