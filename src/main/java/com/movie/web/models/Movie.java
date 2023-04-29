@@ -30,7 +30,7 @@ public class Movie {
     @OneToMany
     private List<Comment> comments;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
         @JoinTable(name = "movies_genres",
             joinColumns = {
                 @JoinColumn(name = "movie_id", referencedColumnName = "id")
@@ -38,13 +38,5 @@ public class Movie {
             inverseJoinColumns = {
                 @JoinColumn(name = "genre_id", referencedColumnName = "id")
             })
-    List<Genre> genres;
-
-    public void addGenre(Genre genre) {
-        if (genres == null) {
-            genres = new ArrayList<>();
-        }
-
-        genres.add(genre);
-    }
+    private List<Genre> genres;
 }

@@ -1,10 +1,13 @@
 package com.movie.web.services.impl;
 
 import com.movie.web.dto.MovieDto;
+import com.movie.web.mappers.GenreMapper;
 import com.movie.web.mappers.MovieMapper;
 import com.movie.web.models.Movie;
+import com.movie.web.repositories.CommentRepository;
 import com.movie.web.repositories.GenreRepository;
 import com.movie.web.repositories.MovieRepository;
+import com.movie.web.services.GenreService;
 import com.movie.web.services.MovieService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,8 +22,11 @@ import static com.movie.web.mappers.MovieMapper.mapToMovieDto;
 @AllArgsConstructor
 public class MovieServiceImpl implements MovieService {
 
+    private final GenreService genreService;
+
     private final MovieRepository movieRepository;
     private final GenreRepository genreRepository;
+    private final CommentRepository commentRepository;
 
     @Override
     public List<MovieDto> getAll() {
@@ -42,6 +48,10 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public void saveMovie(MovieDto movieDto) {
         var movie = mapToMovie(movieDto);
+        var genres = genreService.getGenresByNames(movieDto.getGenres())
+                .stream().map(GenreMapper::mapToGenre).collect(Collectors.toList());
+        movie.setGenres(genres);
+
         movieRepository.save(movie);
     }
 
@@ -59,6 +69,8 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public void deleteMovie(Long movieId) {
+
+
         movieRepository.deleteById(movieId);
     }
 

@@ -3,6 +3,7 @@ package com.movie.web.controllers;
 import com.movie.web.dto.CommentDto;
 import com.movie.web.dto.GenreDto;
 import com.movie.web.dto.MovieDto;
+import com.movie.web.models.Genre;
 import com.movie.web.models.Movie;
 import com.movie.web.services.CommentService;
 import com.movie.web.services.GenreService;
@@ -14,7 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @AllArgsConstructor
@@ -63,11 +66,18 @@ public class MovieController {
     public String createMovieForm(Model model) {
         Movie movie = new Movie();
         model.addAttribute("movie", movie);
+
+        List<String> genres = genreService.getAllGenres()
+                .stream().map(GenreDto::getName)
+                .collect(Collectors.toList());
+        model.addAttribute("genres", genres);
+
         return "pages/movies/movies-create";
     }
 
     @PostMapping("/movies/new")
     public String saveMovie(@Valid @ModelAttribute("movie") MovieDto movieDto,
+                            @RequestParam("genres") List<String> genres,
                             BindingResult result,
                             Model model) {
 
@@ -76,6 +86,7 @@ public class MovieController {
             return "pages/movies/movies-create";
         }
 
+        movieDto.setGenres(genres);
         movieService.saveMovie(movieDto);
         return "redirect:/movies";
     }
@@ -123,6 +134,8 @@ public class MovieController {
 
     @GetMapping("/movies/{movieId}/delete")
     public String deleteMovie(@PathVariable("movieId") Long movieId) {
+
+        commentService.deleteMovieComments(movieId);
         movieService.deleteMovie(movieId);
 
         return "redirect:/movies";

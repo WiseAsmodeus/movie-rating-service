@@ -7,6 +7,7 @@ import com.movie.web.models.Comment;
 import com.movie.web.repositories.MovieRepository;
 import com.movie.web.repositories.CommentRepository;
 import com.movie.web.services.CommentService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class CommentServiceImpl implements CommentService {
     private final MovieRepository movieRepository;
 
     @Override
+    @Transactional
     public void createComment(Long movieId, CommentDto commentDto) {
         Movie movie = movieRepository.findById(movieId).get();
 
@@ -44,6 +46,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional
+    public void deleteMovieComments(Long movieId) {
+        commentRepository.deleteAllByMovieId(movieId);
+    }
+
+    @Override
+    @Transactional
     public void deleteCommentById(Long commentId) {
         commentRepository.deleteById(commentId);
     }
