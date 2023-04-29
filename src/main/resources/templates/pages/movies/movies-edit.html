@@ -15,7 +15,7 @@
     <div class="container">
       <h1>Редактирование фильма</h1>
       <form role="form" method="post"
-            th:action="@{/templates/pages/movies/{movieId}/edit(movieId=${movie.id})}"
+            th:action="@{/movies/{movieId}/edit(movieId=${movie.id})}"
             th:object="${movie}">
         <input type="hidden" th:field="*{id}">
         <div class="form-group col-md-6 mb-1">

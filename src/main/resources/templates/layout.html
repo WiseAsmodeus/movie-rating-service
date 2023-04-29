@@ -18,24 +18,17 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-        <li class="nav-item"><a class="nav-link" th:href="@{/}">Главная</a></li>
-        <li class="nav-item"><a class="nav-link" th:href="@{/about}">FAQ</a></li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/home}">Главная</a></li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" id="navbarMovies" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
           >Фильмы</a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarMovies">
-            <li><a class="dropdown-item" th:href="@{/movies/new}">Добавить</a></li>
             <li><a class="dropdown-item" th:href="@{/movies}">Посмотреть все</a></li>
+            <li><a class="dropdown-item" th:href="@{/movies/recommendations}">Посмотреть рекомендации</a></li>
+            <li><a class="dropdown-item" th:href="@{/movies/top-100}">Топ-100</a></li>
           </ul>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarDropdownBlog" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-          >Аунтефикация</a>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownBlog">
-            <li><a class="dropdown-item" th:href="@{/register}">Регистрация</a></li>
-            <li><a class="dropdown-item" th:href="@{/login}">Вход</a></li>
-          </ul>
-        </li>
+        <li class="nav-item"><a class="nav-link" th:href="@{/auth/login}">Вход</a></li>
       </ul>
     </div>
   </div>

@@ -8,9 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @AllArgsConstructor
 public class AuthenticationController {
 
-    @GetMapping("/login")
+    @GetMapping("/auth/login")
     public String createLoginForm() {
         return "pages/authentication/login";
     }
 
+    @GetMapping("/auth/signup")
+    public String createSignupForm() {
+        return "pages/authentication/signup";
+    }
 }
