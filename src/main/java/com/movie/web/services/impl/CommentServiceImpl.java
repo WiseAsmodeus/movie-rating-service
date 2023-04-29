@@ -1,6 +1,7 @@
 package com.movie.web.services.impl;
 
 import com.movie.web.dto.CommentDto;
+import com.movie.web.mappers.CommentMapper;
 import com.movie.web.models.Movie;
 import com.movie.web.models.Comment;
 import com.movie.web.repositories.MovieRepository;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.movie.web.mappers.CommentMapper.mapToComment;
 
 @Service
 @AllArgsConstructor
@@ -36,7 +39,7 @@ public class CommentServiceImpl implements CommentService {
         var movieComments = commentRepository.findAllByMovie(movie);
 
         return movieComments.stream()
-                .map(this::mapToCommentDto)
+                .map(CommentMapper::mapToCommentDto)
                 .collect(Collectors.toList());
     }
 
@@ -45,22 +48,5 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.deleteById(commentId);
     }
 
-    public Comment mapToComment(CommentDto commentDto) {
-        return Comment.builder()
-                .id(commentDto.getId())
-                .createdOn(commentDto.getCreatedOn())
-                .updatedOn(commentDto.getUpdatedOn())
-                .text(commentDto.getText())
-                .build();
-    }
 
-    public CommentDto mapToCommentDto(Comment comment) {
-        return CommentDto.builder()
-                .id(comment.getId())
-                .text(comment.getText())
-                .username("Custom username")
-                .createdOn(comment.getCreatedOn())
-                .updatedOn(comment.getUpdatedOn())
-                .build();
-    }
 }

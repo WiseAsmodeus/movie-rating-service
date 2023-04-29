@@ -1,6 +1,7 @@
 package com.movie.web.services.impl;
 
 import com.movie.web.dto.MovieDto;
+import com.movie.web.mappers.MovieMapper;
 import com.movie.web.models.Movie;
 import com.movie.web.repositories.MovieRepository;
 import com.movie.web.services.MovieService;
@@ -9,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.movie.web.mappers.MovieMapper.mapToMovie;
+import static com.movie.web.mappers.MovieMapper.mapToMovieDto;
 
 @Service
 @AllArgsConstructor
@@ -21,7 +25,7 @@ public class MovieServiceImpl implements MovieService {
         var movies = movieRepository.findAll();
 
         return movies.stream()
-                .map(this::mapToMovieDto)
+                .map(MovieMapper::mapToMovieDto)
                 .collect(Collectors.toList());
     }
 
@@ -29,7 +33,7 @@ public class MovieServiceImpl implements MovieService {
     public List<MovieDto> searchMovies(String query) {
         List<Movie> movies = movieRepository.searchMovies(query);
         return movies.stream()
-                .map(this::mapToMovieDto)
+                .map(MovieMapper::mapToMovieDto)
                 .collect(Collectors.toList());
     }
 
@@ -56,25 +60,5 @@ public class MovieServiceImpl implements MovieService {
         movieRepository.deleteById(movieId);
     }
 
-    public MovieDto mapToMovieDto(Movie movie) {
-        return MovieDto.builder()
-                .id(movie.getId())
-                .imageUrl(movie.getImageUrl())
-                .title(movie.getTitle())
-                .description(movie.getDescription())
-                .releaseCountry(movie.getReleaseCountry())
-                .releaseYear(movie.getReleaseYear())
-                .build();
-    }
 
-    public Movie mapToMovie(MovieDto movieDto) {
-        return Movie.builder()
-                .id(movieDto.getId())
-                .imageUrl(movieDto.getImageUrl())
-                .title(movieDto.getTitle())
-                .description(movieDto.getDescription())
-                .releaseCountry(movieDto.getReleaseCountry())
-                .releaseYear(movieDto.getReleaseYear())
-                .build();
-    }
 }
