@@ -28,6 +28,8 @@ public class Comment {
     @UpdateTimestamp
     private LocalDateTime updatedOn;
 
-    @ManyToOne
+    @OneToOne
     private Movie movie;
+    // TODO: Comment's upvotes & downvotes
+
 }

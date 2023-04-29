@@ -35,7 +35,10 @@
             </header>
             <!-- Preview image figure-->
             <figure class="mb-4">
-              <img class="img-fluid rounded" th:src="${movie.getImageUrl()}" alt="..." />
+              <img class="img-fluid rounded"
+                   th:src="${movie.getImageUrl()}"
+                   alt="..."
+                   style="height: 600px; width: 400px;"/>
             </figure>
             <!-- Post content-->
             <section class="mb-5">

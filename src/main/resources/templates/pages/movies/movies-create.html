@@ -1,78 +1,94 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Добавление фильма</title>
+    <meta charset="UTF-8">
+    <title>Админка</title>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/31a5b95c71.js" crossorigin="anonymous"></script>
+    <style>
+        .gradient-custom {
+            /* fallback for old browsers */
+            background: #6a11cb;
+
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+        }
+    </style>
 </head>
-<body>
-<main class="flex-shrink-0">
-  <!-- Page Content-->
-  <section layout:fragment="body" class="py-5">
-    <div class="container">
-      <h1>Добавление фильма</h1>
-      <form role="form" method="post" th:action="@{/movies/new}" th:object="${movie}">
-        <div class="form-group col-md-6 mb-1">
-          <label for="title">Название</label>
-          <input
-                  type="text"
-                  class="form-control"
-                  id="title"
-                  name="title"
-                  th:field="*{title}"
-                  placeholder="Укажите название фильма">
-          <p th:if="${#fields.hasErrors('title')}" class="text-danger" th:errors="*{title}"></p>
+<body class="container p-5 gradient-custom text-center">
+    <div class="container card text-center w-75">
+        <div class="card-header bold">Добавление фильма</div>
+        <div class="card-body">Заполните все необходимые поля</div>
+        <div class="card-footer">
+            <a class="btn btn-dark" th:href="@{/admin/control-movies}">Вернуться</a>
         </div>
-        <div class="form-group col-md-6 mb-1">
-          <label for="description">Описание</label>
-          <input
-                  type="text"
-                  class="form-control"
-                  id="description"
-                  name="description"
-                  th:field="*{description}"
-                  placeholder="Описание фильма">
-          <p th:if="${#fields.hasErrors('description')}" class="text-danger" th:errors="*{description}"></p>
-        </div>
-        <div class="form-group col-md-6 mb-1">
-          <label for="releaseCountry">Страна выпуска</label>
-          <input
-                  type="text"
-                  class="form-control"
-                  id="releaseCountry"
-                  name="releaseCountry"
-                  th:field="*{releaseCountry}"
-                  placeholder="Страна выпуска">
-          <p th:if="${#fields.hasErrors('releaseCountry')}" class="text-danger" th:errors="*{releaseCountry}"></p>
-        </div>
-        <div class="form-group col-md-6 mb-1">
-          <label for="imageUrl">Обложка фильма</label>
-          <input
-                  type="text"
-                  class="form-control"
-                  id="imageUrl"
-                  name="imageUrl"
-                  th:field="*{imageUrl}"
-                  placeholder="Вставьте ссылку на обложку">
-          <p th:if="${#fields.hasErrors('imageUrl')}" class="text-danger" th:errors="*{imageUrl}"></p>
-        </div>
-        <div class="form-group col-md-6 mb-3">
-          <label for="releaseYear">Год выпуска</label>
-          <input type="number"
-                 class="form-control"
-                 id="releaseYear"
-                 name="releaseYear"
-                 th:field="*{releaseYear}"
-                 placeholder="Укажите год выпуска">
-          <p th:if="${#fields.hasErrors('releaseYear')}" class="text-danger" th:errors="*{releaseYear}"></p>
-        </div>
-        <button type="submit" class="btn btn-primary">Добавить</button>
-      </form>
     </div>
-  </section>
-</main>
+    <div class="container bg-light p-3 mt-4 text-center w-75">
+        <form role="form" method="post" th:action="@{/movies/new}" th:object="${movie}">
+            <div class="form-group">
+                <label for="title">Название</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="title"
+                        name="title"
+                        th:field="*{title}"
+                        placeholder="Укажите название фильма">
+                <p th:if="${#fields.hasErrors('title')}" class="text-danger" th:errors="*{title}"></p>
+            </div>
+            <div class="form-group">
+                <label for="description">Описание</label>
+                <textarea
+                        type="text"
+                        rows="3"
+                        class="form-control"
+                        id="description"
+                        name="description"
+                        th:field="*{description}"
+                        placeholder="Описание фильма"
+                ></textarea>
+                <p th:if="${#fields.hasErrors('description')}" class="text-danger" th:errors="*{description}"></p>
+            </div>
+            <div class="form-group">
+                <label for="releaseCountry">Страна выпуска</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="releaseCountry"
+                        name="releaseCountry"
+                        th:field="*{releaseCountry}"
+                        placeholder="Страна выпуска">
+                <p th:if="${#fields.hasErrors('releaseCountry')}" class="text-danger" th:errors="*{releaseCountry}"></p>
+            </div>
+            <div class="form-group">
+                <label for="imageUrl">Обложка фильма</label>
+                <input
+                        type="text"
+                        class="form-control"
+                        id="imageUrl"
+                        name="imageUrl"
+                        th:field="*{imageUrl}"
+                        placeholder="Вставьте ссылку на обложку">
+                <p th:if="${#fields.hasErrors('imageUrl')}" class="text-danger" th:errors="*{imageUrl}"></p>
+            </div>
+            <div class="form-group">
+                <label for="releaseYear">Год выпуска</label>
+                <input type="number"
+                       class="form-control"
+                       id="releaseYear"
+                       name="releaseYear"
+                       th:field="*{releaseYear}"
+                       placeholder="Укажите год выпуска">
+                <p th:if="${#fields.hasErrors('releaseYear')}" class="text-danger" th:errors="*{releaseYear}"></p>
+            </div>
+            <button type="submit" class="btn btn-primary">Добавить</button>
+        </form>
+    </div>
 </body>
 </html>

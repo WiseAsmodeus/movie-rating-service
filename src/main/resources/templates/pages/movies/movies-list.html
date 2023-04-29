@@ -12,29 +12,37 @@
 <main class="flex-shrink-0">
     <!-- Page Content-->
     <section layout:fragment="body" class="py-5">
-        <div class="container px-5 my-5">
-            <div class="text-center mb-5">
-                <h1 class="fw-bolder">Список фильмов</h1>
-
-                <div>
-                    <form th:action="@{/movies/search}" class="my-2 mb-3">
-                        <input name="query" class="form-control" type="search" placeholder="Поиск фильмов"
-                               aria-label="Поиск">
-                    </form>
-                </div>
+        <div class="container px-5">
+            <div class="mt-2">
+                <form th:action="@{/movies/search}" class="my-2 mb-3">
+                    <input name="query" class="form-control" type="search" placeholder="Поиск фильмов"
+                           aria-label="Поиск">
+                </form>
             </div>
-            <div class="row gx-5 row-cols-md-3">
-                <div th:each="movie : ${movies}" class="col-lg-6 mb-2 mt-3">
-                    <div class="position-relative mb-3">
-                        <img class="img-fluid rounded-3 mb-3" th:src="${movie.getImageUrl()}" alt="..." />
-                        <a th:text="${movie.getTitle()}" class="h3 fw-bolder text-decoration-none link-dark stretched-link" href="#!">Project name</a>
+            <div class="text-center mb-2 mt-4">
+                <h1 class="fw-bolder">Список фильмов</h1>
+            </div>
+        </div>
+        <div class="container px-5 my-5">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
+                <div class="col" th:each="movie:${movies}">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <img class="card-img-top" th:src="${movie.getImageUrl()}"
+                                style="height: 400px">
+                            <br><br>
+                            <div class="form-floating mb-3">
+                                <p class="card-text text-truncate"><b th:text="${movie.getTitle()}"/></p>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a th:href="@{movies/{movieId}(movieId=${movie.id})}"
+                                       class="btn btn-sm btn-outline-secondary"
+                                    >Подробнее</a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <a class="btn btn-primary" th:href="@{/movies/{movieId}/edit(movieId=${movie.id})}">
-                        Редактировать
-                    </a>
-                    <a class="btn btn-primary" th:href="@{/movies/{movieId}(movieId=${movie.id})}">
-                        Подробнее...
-                    </a>
                 </div>
             </div>
         </div>

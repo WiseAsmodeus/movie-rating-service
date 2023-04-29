@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Админка</title>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet">
+    <style>
+        .gradient-custom {
+            /* fallback for old browsers */
+            background: #6a11cb;
+
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+        }
+    </style>
+</head>
+<body class="container p-5 gradient-custom">
+    <div class="card text-center">
+        <div class="card-header">Добро пожаловать в админку!</div>
+        <div class="card-body">Контролируйте всё, что пожелаете, с помощью кнопок!</div>
+        <div class="card-footer">
+            <a class="btn btn-dark" th:href="@{/home}">Покинуть админку</a>
+        </div>
+    </div>
+    <div class="d-flex p-3 justify-content-lg-center align-items-center flex-md-wrap">
+        <a class="btn-lg bg-dark text-white m-5 w-25 text-center"
+           style="height: 75px" th:href="@{/admin/control-movies}">Управление фильмами</a>
+        <a class="btn-lg bg-dark text-white m-5 w-25 text-center"
+           style="height: 75px" th:href="@{/admin}">Управление пользователями</a>
+        <a class="btn-lg bg-dark text-white m-5 w-25 text-center"
+           style="height: 75px" th:href="@{/admin}">Управление жанрами</a>
+        <a class="btn-lg bg-dark text-white m-5 w-25 text-center"
+           style="height: 75px" th:href="@{/admin}">Управление комментариями</a>
+        <a class="btn-lg bg-dark text-white m-5 w-25 text-center"
+           style="height: 75px" th:href="@{/admin}">Управление рецензиями</a>
+        <a class="btn-lg bg-dark text-white m-5 w-25 text-center"
+           style="height: 75px" th:href="@{/admin}">Посмотреть графики</a>
+    </div>
+</body>
+</html>
