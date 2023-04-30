@@ -3,7 +3,9 @@ package com.movie.web.security;
 import com.movie.web.models.UserEntity;
 import com.movie.web.repositories.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,7 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         if (user != null) {
             return new User(
-                    user.getEmail(),
+                    user.getUsername(),
                     user.getPassword(),
                     user.getRoles().stream()
                             .map(role -> new SimpleGrantedAuthority(

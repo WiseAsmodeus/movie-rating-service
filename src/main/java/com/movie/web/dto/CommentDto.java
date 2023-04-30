@@ -16,9 +16,9 @@ public class CommentDto {
     private Long id;
 
     private String username;
+    private String userAvatarUrl;
     @NotEmpty
     private String text;
 
-    private LocalDateTime createdOn;
-    private LocalDateTime updatedOn;
+    private String createdOn;
 }
