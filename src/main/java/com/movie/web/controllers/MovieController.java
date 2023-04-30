@@ -94,8 +94,14 @@ public class MovieController {
     @GetMapping("/movies/{movieId}/edit")
     public String editMovieForm(@PathVariable("movieId") Long movieId,
                                 Model model) {
+
         MovieDto movie = movieService.findMovieById(movieId);
         model.addAttribute("movie", movie);
+
+        List<String> genres = genreService.getAllGenres()
+                .stream().map(GenreDto::getName)
+                .collect(Collectors.toList());
+        model.addAttribute("genres", genres);
 
         return "pages/movies/movies-edit";
     }
@@ -103,6 +109,7 @@ public class MovieController {
     @PostMapping("/movies/{movieId}/edit")
     public String editMovie(@PathVariable("movieId") Long movieId,
                             @Valid @ModelAttribute("movie") MovieDto movie,
+                            @RequestParam("genres") List<String> genres,
                             BindingResult result) {
 
         if (result.hasErrors()) {
@@ -110,6 +117,8 @@ public class MovieController {
         }
 
         movie.setId(movieId);
+        movie.setGenres(genres);
+
         movieService.updateMovie(movie);
 
         return "redirect:/movies";

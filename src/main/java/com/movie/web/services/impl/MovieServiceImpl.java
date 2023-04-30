@@ -47,7 +47,11 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public void saveMovie(MovieDto movieDto) {
+
         var movie = mapToMovie(movieDto);
+
+        System.out.println(movie.getId() + "  " + movie.toString());
+
         var genres = genreService.getGenresByNames(movieDto.getGenres())
                 .stream().map(GenreMapper::mapToGenre).collect(Collectors.toList());
         movie.setGenres(genres);
