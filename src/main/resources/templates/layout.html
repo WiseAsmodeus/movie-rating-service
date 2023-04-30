@@ -34,7 +34,7 @@
         <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/auth/login}">Вход</a></li>
         <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/auth/signup}">Регистрация</a></li>
         <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/auth/logout}">Выход</a></li>
-        <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/user}">Профиль</a></li>
+        <li sec:authorize="isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/profile}">Профиль</a></li>
       </ul>
     </div>
   </div>
