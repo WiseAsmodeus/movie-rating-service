@@ -31,6 +31,7 @@ public class SecurityConfig {
                 .requestMatchers(
                         "/auth/**",
                         "/movies",
+                        "/home",
                         "/css/**",
                         "/js/**")
                 .permitAll()
