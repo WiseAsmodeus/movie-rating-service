@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <meta charset="UTF-8">
+  <title>Добавление фильма</title>
+  <script src="https://kit.fontawesome.com/31a5b95c71.js" crossorigin="anonymous"></script>
+  <style>
+    .gradient-custom {
+      /* fallback for old browsers */
+      background: #f6d365;
+
+      /* Chrome 10-25, Safari 5.1-6 */
+      background: -webkit-linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1));
+
+      /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      background: linear-gradient(to right bottom, rgba(246, 211, 101, 1), rgba(253, 160, 133, 1))
+    }
+  </style>
+</head>
+<body>
+  <section layout:fragment="body" class="min-vh-100">
+    <div class="container bg-light mt-4 p-2">
+      <div class="table-wrapper">
+        <div class="table-title">
+          <div class="row">
+            <div class="col-sm-8"><h2>Фильмы</h2></div>
+          </div>
+        </div>
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th class="text-center">Обложка</th>
+            <th class="text-center">Название</th>
+            <th class="text-center">Оценка</th>
+            <th class="text-center">Действия</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr th:each="movie : ${wishlist.movieDtoList}">
+            <td class="text-center">
+              <img th:src="${movie.imageUrl}" class="img-thumbnail" style="height: 125px">
+            </td>
+            <td class="text-center">
+              <a class="text-decoration-none text-lg-center"
+                      th:href="@{/movies/{movieId}(movieId=${movie.id})}" th:text="${movie.title}"></a>
+            </td>
+            <td class="text-center">10</td>
+            <td class="text-center">
+              <a class="fa-sharp fa-solid fa-trash"
+                 th:href="@{/wishlists/{username}/remove/{movieId}(username=${wishlist.username}, movieId=${movie.getId()})}"
+              ></a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

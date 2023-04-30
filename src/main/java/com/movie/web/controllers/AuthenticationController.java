@@ -3,6 +3,7 @@ package com.movie.web.controllers;
 import com.movie.web.dto.RegistrationDto;
 import com.movie.web.models.UserEntity;
 import com.movie.web.services.UserService;
+import com.movie.web.services.WishlistService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class AuthenticationController {
 
     private final UserService userService;
+    private final WishlistService wishlistService;
 
     @GetMapping("/auth/login")
     public String createLoginForm() {
@@ -57,7 +59,8 @@ public class AuthenticationController {
             return "pages/authentication/signup";
         }
 
-        userService.saveUser(user);
+        var createdUser = userService.saveUser(user);
+        wishlistService.createWishlistForUser(createdUser.getUsername());
 
         return "redirect:/movies?success";
     }

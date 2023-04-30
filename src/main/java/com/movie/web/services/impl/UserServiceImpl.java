@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void saveUser(RegistrationDto registrationDto) {
+    public UserEntity saveUser(RegistrationDto registrationDto) {
         UserEntity user = UserEntity.builder()
                 .username(registrationDto.getUsername())
                 .email(registrationDto.getEmail())
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
         Role role = roleRepository.findByName("USER");
         user.setRoles(Arrays.asList(role));
 
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     @Override

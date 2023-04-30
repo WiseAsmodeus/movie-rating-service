@@ -5,9 +5,8 @@ import com.movie.web.dto.GenreDto;
 import com.movie.web.dto.MovieDto;
 import com.movie.web.models.Genre;
 import com.movie.web.models.Movie;
-import com.movie.web.services.CommentService;
-import com.movie.web.services.GenreService;
-import com.movie.web.services.MovieService;
+import com.movie.web.security.SecurityUtil;
+import com.movie.web.services.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -27,6 +26,8 @@ public class MovieController {
     private final MovieService movieService;
     private final CommentService commentService;
     private final GenreService genreService;
+    private final UserService userService;
+    private final WishlistService wishlistService;
 
     @GetMapping("/movies")
     public String listMovies(Model model) {
@@ -137,6 +138,18 @@ public class MovieController {
 
         var movieComments = commentService.getMovieComments(movieId);
         model.addAttribute("movieComments", movieComments);
+
+
+        var user = userService.getByUsername(SecurityUtil.getSessionUser());
+        if (user != null) {
+            model.addAttribute("nullWishlist", false);
+            model.addAttribute("user", user);
+            model.addAttribute("existsInWishlist",
+                    wishlistService.filmExistsInUserWishlist(movieId, user.getUsername()));
+        }
+        else {
+            model.addAttribute("nullWishlist", true);
+        }
 
         return "pages/movies/movies-detail";
     }

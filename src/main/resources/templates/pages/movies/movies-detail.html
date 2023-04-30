@@ -50,6 +50,16 @@
               ></p>
             </section>
           </article>
+          <div class="mb-2 text-white">
+            <div th:if="${!nullWishlist}">
+              <a th:if="${!existsInWishlist}"
+                 th:href="@{/wishlists/{username}/add/{movieId}(username=${user.username}, movieId=${movie.id})}"
+                 class="btn-lg btn-dark">Добавить в список желаемого</a>
+              <a th:if="${existsInWishlist}"
+                 th:href="@{/wishlists/{username}/remove/{movieId}(username=${user.username}, movieId=${movie.id})}"
+                 class="btn-lg btn-dark">Удалить из списка желаемого</a>
+            </div>
+          </div>
           <!-- Comments section-->
           <section class="mb-5">
             <div class="card bg-light">
@@ -87,6 +97,9 @@
                               </div>
                             </div>
                           </div>
+                          <a th:if="${user.username == comment.username}"
+                                  th:href="@{/comments/{movieId}/delete/{commentId}(movieId=${movie.id}, commentId=${comment.id})}"
+                          >Удалить</a>
                         </div>
                       </div>
                     </div>
