@@ -17,7 +17,7 @@ public class CommentMapper {
         return CommentDto.builder()
                 .id(comment.getId())
                 .text(comment.getText())
-                .username("Custom username")
+                .username(comment.getPostedBy().getUsername())
                 .createdOn(comment.getCreatedOn())
                 .updatedOn(comment.getUpdatedOn())
                 .build();

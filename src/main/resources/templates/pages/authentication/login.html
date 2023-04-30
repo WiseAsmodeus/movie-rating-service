@@ -14,36 +14,47 @@
         <div class="container py-5 h-100">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+
+                    <div th:if="${param.error}" class="alert alert-danger">
+                        Неправильный логин или пароль.
+                    </div>
+                    <div th:if="${param.logout}" class="alert alert-success">
+                        Вы вышли из сервиса.
+                    </div>
+
                     <div class="card bg-dark text-white " style="border-radius: 1rem;">
                         <div class="card-body p-5 text-center">
 
-                            <div class="mb-md-5 mt-md-4 pb-5">
+                            <form role="form" method="post" th:action="@{/auth/login}" class="mb-md-5 mt-md-4 pb-5">
 
                                 <h2 class="fw-bold mb-2 text-uppercase">Вход</h2>
                                 <p class="text-white-50 mb-5">Пожалуйста, введите свой логин и пароль!</p>
 
                                 <div class="form-outline form-white mb-4">
-                                    <input type="email" id="typeEmailX" class="form-control form-control-lg" />
-                                    <label class="form-label" for="typeEmailX">Логин или почта</label>
+                                    <input type="text"
+                                           id="username"
+                                           name="username"
+                                           class="form-control form-control-lg" />
+                                    <label class="form-label" for="username">Логин</label>
                                 </div>
 
                                 <div class="form-outline form-white mb-4">
-                                    <input type="password" id="typePasswordX" class="form-control form-control-lg" />
-                                    <label class="form-label" for="typePasswordX">Пароль</label>
+                                    <input type="password"
+                                           id="password"
+                                           name="password"
+                                           class="form-control form-control-lg" />
+                                    <label class="form-label" for="password">Пароль</label>
                                 </div>
 
-                                <button class="btn btn-outline-light btn-lg px-5" type="submit">Войти</button>
+                                <button class="btn btn-outline-light btn-lg px-5"
+                                        id="Log in"
+                                        type="submit">Войти</button>
 
-                                <div class="d-flex justify-content-center text-center mt-4 pt-1">
-                                    <a href="#!" class="text-white"><i class="fab fa-facebook-f fa-lg"></i></a>
-                                    <a href="#!" class="text-white"><i class="fab fa-twitter fa-lg mx-4 px-2"></i></a>
-                                    <a href="#!" class="text-white"><i class="fab fa-google fa-lg"></i></a>
-                                </div>
-
-                            </div>
+                            </form>
 
                             <div>
-                                <p class="mb-0">Нет аккаунта? <a th:href="@{/auth/signup}" class="text-white-50 fw-bold">Регистрация</a>
+                                <p class="mb-0">Нет аккаунта? <a th:href="@{/auth/signup}"
+                                                                 class="text-white-50 fw-bold">Регистрация</a>
                                 </p>
                             </div>
 

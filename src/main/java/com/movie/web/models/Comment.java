@@ -30,6 +30,10 @@ public class Comment {
 
     @OneToOne
     private Movie movie;
+
+    @ManyToOne
+    @JoinColumn(name = "posted_by", nullable = false)
+    private UserEntity postedBy;
     // TODO: Comment's upvotes & downvotes
 
 }

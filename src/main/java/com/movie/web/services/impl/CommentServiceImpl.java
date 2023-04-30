@@ -6,6 +6,8 @@ import com.movie.web.models.Movie;
 import com.movie.web.models.Comment;
 import com.movie.web.repositories.MovieRepository;
 import com.movie.web.repositories.CommentRepository;
+import com.movie.web.repositories.UserRepository;
+import com.movie.web.security.SecurityUtil;
 import com.movie.web.services.CommentService;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -22,16 +24,22 @@ public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
     private final MovieRepository movieRepository;
+    private final UserRepository userRepository;
 
     @Override
     @Transactional
     public void createComment(Long movieId, CommentDto commentDto) {
         Movie movie = movieRepository.findById(movieId).get();
 
-        Comment review = mapToComment(commentDto);
-        review.setMovie(movie);
+        Comment comment = mapToComment(commentDto);
+        comment.setMovie(movie);
 
-        commentRepository.save(review);
+        var currentUser = userRepository.findByUsername(SecurityUtil.getSessionUser());
+        if (currentUser != null) {
+            comment.setPostedBy(currentUser);
+        }
+
+        commentRepository.save(comment);
     }
 
     @Override

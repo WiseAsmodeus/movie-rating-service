@@ -13,6 +13,9 @@
     <!-- Page Content-->
     <section layout:fragment="body" class="py-5">
         <div class="container px-5">
+            <div th:if="${param.success}" class="alert alert-success">
+                Вы успешно зарегестрировались в сервисе!
+            </div>
             <div class="mt-2">
                 <form th:action="@{/movies/search}" class="my-2 mb-3">
                     <input name="query" class="form-control" type="search" placeholder="Поиск фильмов"
