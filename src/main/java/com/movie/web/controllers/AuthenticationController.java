@@ -22,7 +22,6 @@ public class AuthenticationController {
 
     @GetMapping("/auth/login")
     public String createLoginForm() {
-
         return "pages/authentication/login";
     }
 

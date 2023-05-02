@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход</title>
+</head>
+<body>
+  <!-- Page Content-->
+    <section layout:fragment="body" class="min-vh-100">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-lg-4" >
+                    <h1 class="text-center border-2 rounded-2">Настройте ползунки в
+                        соответствии с вашим опытом от просмотра фильма</h1>
+
+                    <form method="post"
+                          role="form"
+                          th:object="${ratingModal}"
+                          th:action="@{/movies/{movieId}/apply(movieId=${ratingModal.movieId})}"
+                    >
+                        <div class="form-group">
+                            <label for="loreScore" class="form-label"
+                            >Задумка и сюжет/диалоги</label>
+                            <input type="range"
+                                   class="form-range"
+                                   min="0" max="1" step="0.5"
+                                   th:field="*{loreScore}"
+                                   id="loreScore">
+                        </div>
+                        <div class="form-group">
+                            <label for="actorScore" class="form-label"
+                            >Игра актеров/проработка и убедительность персонажей</label>
+                            <input type="range"
+                                   class="form-range"
+                                   min="0" max="1" step="0.5"
+                                   th:field="*{actorScore}"
+                                   id="actorScore">
+                        </div>
+                        <div class="form-group">
+                            <label for="cinemaScore" class="form-label"
+                            >Съемка (монтаж, композиция кадра, спецэффекты)/музыка, цветовое решение, освещение</label>
+                            <input type="range"
+                                   class="form-range"
+                                   min="0" max="1" step="0.5"
+                                   th:field="*{cinemaScore}"
+                                   id="cinemaScore">
+                        </div>
+                        <div class="form-group">
+                            <label for="genreScore" class="form-label"
+                            >Хорош ли в своем жанре?</label>
+                            <input type="range"
+                                   class="form-range"
+                                   min="0" max="1" step="0.5"
+                                   th:field="*{genreScore}"
+                                   id="genreScore">
+                        </div>
+                        <div class="form-group">
+                            <label for="originalScore" class="form-label"
+                            >Оригинальность/реалистичность/логичность</label>
+                            <input type="range"
+                                   class="form-range"
+                                   min="0" max="1" step="0.5"
+                                   th:field="*{originalScore}"
+                                   id="originalScore">
+                        </div>
+                        <div class="form-group">
+                            <label for="oneBreathScore" class="form-label"
+                            >Захватываемость/просмотр на одном дыхании</label>
+                            <input type="range"
+                                   class="form-range"
+                                   min="0" max="1" step="0.5"
+                                   th:field="*{oneBreathScore}"
+                                   id="oneBreathScore">
+                        </div>
+                        <div class="form-group">
+                            <label for="unexpectedScore" class="form-label"
+                            >Непредсказуемость/саспенс</label>
+                            <input type="range"
+                                   class="form-range"
+                                   min="0" max="1" step="0.5"
+                                   th:field="*{unexpectedScore}"
+                                   id="unexpectedScore">
+                        </div>
+                        <div class="form-group">
+                            <label for="emotionScore" class="form-label"
+                            >Эмоции/раздумья после (или во время) просмотра</label>
+                            <input type="range"
+                                   class="form-range"
+                                   min="0" max="1" step="0.5"
+                                   th:field="*{emotionScore}"
+                                   id="emotionScore">
+                        </div>
+                        <div class="form-group">
+                            <label for="adviceScore" class="form-label"
+                            >Посоветовал(а) бы/пересмотрел(а) бы?</label>
+                            <input type="range"
+                                   class="form-range"
+                                   min="0" max="1" step="0.5"
+                                   th:field="*{adviceScore}"
+                                   id="adviceScore">
+                        </div>
+                        <div class="form-group">
+                            <label for="senseScore" class="form-label"
+                            >Перевернул мировоззрение, взгляд на жизнь/заставил переосмыслить что-либо/
+                                поразил своей необычностью?</label>
+                            <input type="range"
+                                   class="form-range"
+                                   min="0" max="1" step="0.5"
+                                   th:field="*{senseScore}"
+                                   id="senseScore">
+                        </div>
+
+                        <button type="submit" class="btn btn-dark text-white">Поставить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

@@ -9,6 +9,7 @@ import com.movie.web.repositories.GenreRepository;
 import com.movie.web.repositories.MovieRepository;
 import com.movie.web.services.GenreService;
 import com.movie.web.services.MovieService;
+import com.movie.web.services.RatingService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ import static com.movie.web.mappers.MovieMapper.mapToMovieDto;
 public class MovieServiceImpl implements MovieService {
 
     private final GenreService genreService;
+    private final RatingService ratingService;
 
     private final MovieRepository movieRepository;
     private final GenreRepository genreRepository;
@@ -32,17 +34,25 @@ public class MovieServiceImpl implements MovieService {
     public List<MovieDto> getAll() {
         var movies = movieRepository.findAll();
 
-        return movies.stream()
+        var movieDtoList = movies.stream()
                 .map(MovieMapper::mapToMovieDto)
                 .collect(Collectors.toList());
+
+        applyRatings(movieDtoList);
+
+        return movieDtoList;
     }
 
     @Override
     public List<MovieDto> searchMovies(String query) {
         List<Movie> movies = movieRepository.searchMovies(query);
-        return movies.stream()
+        var filteredMovies = movies.stream()
                 .map(MovieMapper::mapToMovieDto)
                 .collect(Collectors.toList());
+
+        applyRatings(filteredMovies);
+
+        return filteredMovies;
     }
 
     @Override
@@ -62,9 +72,13 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public MovieDto findMovieById(long movieId) {
         var movie = movieRepository.findById(movieId).get();
+        var movieDto = mapToMovieDto(movie);
 
-        return mapToMovieDto(movie);
+        applyRating(movieId, movieDto);
+
+        return movieDto;
     }
+
 
     @Override
     public void updateMovie(MovieDto movie) {
@@ -73,8 +87,6 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public void deleteMovie(Long movieId) {
-
-
         movieRepository.deleteById(movieId);
     }
 
@@ -82,10 +94,26 @@ public class MovieServiceImpl implements MovieService {
     public List<MovieDto> findMoviesByGenreName(String genreName) {
         var genreId = genreRepository.getGenreByName(genreName).getId();
 
-        return movieRepository.findMoviesByGenres_Id(genreId)
+        var movies = movieRepository.findMoviesByGenres_Id(genreId)
                 .stream().map(MovieMapper::mapToMovieDto)
                 .collect(Collectors.toList());
+
+        applyRatings(movies);
+
+        return movies;
     }
 
+    @Override
+    public void applyRatings(List<MovieDto> movies) {
+        for (MovieDto movie : movies) {
+            applyRating(movie.getId(), movie);
+        }
+    }
 
+    private void applyRating(long movieId, MovieDto movieDto) {
+        var rating = ratingService.countAverageRatingOfMovie(movieId)
+                .doubleValue();
+
+        movieDto.setRating(String.format("%,.2f", rating));
+    }
 }

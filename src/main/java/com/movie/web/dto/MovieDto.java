@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,8 @@ public class MovieDto {
     @Min(value = 1800, message = "Год выпуска не может быть раньше 1800 года!")
     @Max(value = 2030, message = "Год выпуска не может быть позже 2030 года!")
     private int releaseYear;
+
+    private String rating;
 
     private List<String> genres;
 }

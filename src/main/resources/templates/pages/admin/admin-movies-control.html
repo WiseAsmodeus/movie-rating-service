@@ -55,7 +55,7 @@
                 <tr th:each="movie : ${movies}">
                     <td th:text="${movie.getId()}"></td>
                     <td th:text="${movie.getTitle()}">Administration</td>
-                    <td>10</td>
+                    <td th:text="${movie.rating}"></td>
                     <td>
                         <a class="fa-regular fa-pen-to-square"
                            th:href="@{/movies/{movieId}/edit(movieId=${movie.getId()})}"

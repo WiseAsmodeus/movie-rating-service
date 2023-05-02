@@ -48,7 +48,7 @@
               <a class="text-decoration-none text-lg-center"
                       th:href="@{/movies/{movieId}(movieId=${movie.id})}" th:text="${movie.title}"></a>
             </td>
-            <td class="text-center">10</td>
+            <td class="text-center" th:text="${movie.rating}"></td>
             <td class="text-center">
               <a class="fa-sharp fa-solid fa-trash"
                  th:href="@{/wishlists/{username}/remove/{movieId}(username=${wishlist.username}, movieId=${movie.getId()})}"

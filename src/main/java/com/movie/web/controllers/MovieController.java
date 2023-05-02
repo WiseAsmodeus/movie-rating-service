@@ -28,6 +28,7 @@ public class MovieController {
     private final GenreService genreService;
     private final UserService userService;
     private final WishlistService wishlistService;
+    private final RatingService ratingService;
 
     @GetMapping("/movies")
     public String listMovies(Model model) {

@@ -7,6 +7,7 @@ import com.movie.web.models.Wishlist;
 import com.movie.web.repositories.MovieRepository;
 import com.movie.web.repositories.UserRepository;
 import com.movie.web.repositories.WishlistRepository;
+import com.movie.web.services.MovieService;
 import com.movie.web.services.WishlistService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ public class WishlistServiceImpl implements WishlistService {
     private final WishlistRepository wishlistRepository;
     private final UserRepository userRepository;
     private final MovieRepository movieRepository;
+    private final MovieService movieService;
 
     @Override
     public void createWishlistForUser(String username) {
@@ -52,7 +54,10 @@ public class WishlistServiceImpl implements WishlistService {
 
         userWishlist = wishlistRepository.findByUserUsername(username);
 
-        return WishlistMapper.mapToWishlistDto(userWishlist);
+        var wishlistDto = WishlistMapper.mapToWishlistDto(userWishlist);
+        movieService.applyRatings(wishlistDto.getMovieDtoList());
+
+        return wishlistDto;
     }
 
     @Override
