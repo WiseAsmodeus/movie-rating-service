@@ -89,7 +89,11 @@
                     <div th:each="comment : ${movieComments}" class="d-flex flex-start mb-4">
                       <img class="rounded-circle shadow-1-strong me-3"
                            th:src="${comment.userAvatarUrl}" alt="avatar" width="65"
-                           height="65" />
+                           height="65"
+                      >
+                      <a class="link-muted" th:href="@{/profile/{username}(username=${comment.username})}">
+                        Профиль
+                      </a>
                       <div class="card w-100">
                         <div class="card-body p-4">
                           <div class="">

@@ -36,7 +36,6 @@ public class MovieController {
         var movies = movieService.getAll();
         model.addAttribute("movies", movies);
 
-
         return "pages/movies/movies-list";
     }
 

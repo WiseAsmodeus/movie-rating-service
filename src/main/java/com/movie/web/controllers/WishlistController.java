@@ -1,5 +1,6 @@
 package com.movie.web.controllers;
 
+import com.movie.web.security.SecurityUtil;
 import com.movie.web.services.WishlistService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,13 @@ public class WishlistController {
             Model model,
             @PathVariable("username") String username)
     {
+
+        var currentLoggedInUser = SecurityUtil.getSessionUser();
+        if (currentLoggedInUser != null && currentLoggedInUser.equals(username)) {
+            model.addAttribute("usersPage", true);
+        } else {
+            model.addAttribute("usersPage", false);
+        }
 
         var userWishlist = wishlistService.findUserWishlist(username);
         model.addAttribute("wishlist", userWishlist);
