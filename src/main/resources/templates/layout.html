@@ -27,8 +27,8 @@
           >Фильмы</a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarMovies">
             <li><a class="dropdown-item" th:href="@{/movies}">Посмотреть все</a></li>
-            <li><a class="dropdown-item" th:href="@{/movies/recommendations}">Посмотреть рекомендации</a></li>
-            <li><a class="dropdown-item" th:href="@{/movies/top-100}">Топ-100</a></li>
+<!--            <li><a class="dropdown-item" th:href="@{/movies/recommendations}">Посмотреть рекомендации</a></li>-->
+<!--            <li><a class="dropdown-item" th:href="@{/movies/top-100}">Топ-100</a></li>-->
           </ul>
         </li>
         <li sec:authorize="!isAuthenticated()" class="nav-item"><a class="nav-link" th:href="@{/auth/login}">Вход</a></li>

@@ -164,4 +164,17 @@ public class MovieController {
 
         return "redirect:/movies";
     }
+
+    @GetMapping("/movies/{movieId}/graph")
+    public String showGraph(@PathVariable("movieId") Long movieId,
+                            Model model) {
+
+        var movie = movieService.findMovieById(movieId);
+        model.addAttribute("movie", movie);
+
+        List<List<Object>> chartData = ratingService.rangeRatings(movieId);
+        model.addAttribute("chartData" ,chartData);
+
+        return "/pages/admin/graphs";
+    }
 }

@@ -7,15 +7,19 @@ import com.movie.web.repositories.RatingRepository;
 import com.movie.web.repositories.UserRepository;
 import com.movie.web.security.SecurityUtil;
 import com.movie.web.services.RatingService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Hashtable;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
 public class RatingServiceImpl implements RatingService {
-
     private final RatingRepository ratingRepository;
     private final UserRepository userRepository;
     private final MovieRepository movieRepository;
@@ -75,6 +79,42 @@ public class RatingServiceImpl implements RatingService {
         return new BigDecimal(avg);
     }
 
+    @Override
+    @Transactional
+    public List<List<Object>> rangeRatings(Long movieId) {
+
+        var movieRatings = ratingRepository.findAllByMovieId(movieId);
+        if (movieRatings == null || movieRatings.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        Dictionary<Integer, List<Object>> rangedRatings = new Hashtable<>();
+        for (int i = 0; i < 10; i++) {
+            rangedRatings.put(i, new ArrayList<>());
+        }
+
+        for (var rating : movieRatings) {
+            var score = rating.getScore().doubleValue();
+            var key = (int)Math.floor(score);
+            if (key == 10) {
+                key--;
+            }
+            rangedRatings.get(key).add(score);
+        }
+
+        List<List<Object>> result = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            if (rangedRatings.get(i).isEmpty()) {
+                continue;
+            }
+
+            var title = String.format("От %d до %d", i, i+1);
+            result.add(List.of(title, rangedRatings.get(i).size()));
+        }
+
+        return result;
+    }
+
     public BigDecimal compileRating(ApplyRatingRequest request) {
 
         var sum = 0.0;
@@ -92,4 +132,6 @@ public class RatingServiceImpl implements RatingService {
 
         return new BigDecimal(sum);
     }
+
+
 }

@@ -65,6 +65,9 @@
               <a class="btn-lg btn-dark"
                 th:href="@{/movies/{movieId}/rating-helper(movieId=${movie.id})}"
               >Поставить оценку</a>
+              <a class="btn-lg btn-dark"
+                th:href="@{/movies/{movieId}/graph(movieId=${movie.id})}"
+              >Оценки</a>
             </div>
           </div>
           <!-- Comments section-->
@@ -91,13 +94,13 @@
                            th:src="${comment.userAvatarUrl}" alt="avatar" width="65"
                            height="65"
                       >
-                      <a class="link-muted" th:href="@{/profile/{username}(username=${comment.username})}">
-                        Профиль
-                      </a>
                       <div class="card w-100">
                         <div class="card-body p-4">
                           <div class="">
-                            <h5 th:text="${comment.getUsername()}"></h5>
+                            <a class="text-black text-decoration-none"
+                                    th:text="${comment.getUsername()}"
+                               th:href="@{/profile/{username}(username=${comment.username})}"
+                            ></a>
                             <p th:text="${comment.createdOn.toString()}" class="small"></p>
                             <p th:text="${comment.getText()}">
                             </p>
