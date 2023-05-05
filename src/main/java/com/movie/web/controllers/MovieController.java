@@ -36,12 +36,14 @@ public class MovieController {
         var movies = movieService.getAll();
         model.addAttribute("movies", movies);
 
+
         return "pages/movies/movies-list";
     }
 
-    @GetMapping("/movies/search")
+    @GetMapping("/movies-search")
     public String searchMovies(
             @RequestParam(value = "query") String query, Model model) {
+
         List<MovieDto> movies = movieService.searchMovies(query);
         model.addAttribute("movies", movies);
 

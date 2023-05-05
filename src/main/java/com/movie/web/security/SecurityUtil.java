@@ -9,8 +9,6 @@ public class SecurityUtil {
         Authentication authentication = SecurityContextHolder.getContext()
                 .getAuthentication();
 
-
-
         return authentication.getName();
     }
 }
